@@ -2,17 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
 final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
 final TextEditingController _emailController = TextEditingController();
 final TextEditingController _passwordController = TextEditingController();
+final TextEditingController _passwordRepeatController = TextEditingController();
+
 bool _textPassword = true;
 String? validateEmail(String? value) {
   // Expresión regular para validar un correo electrónico
@@ -56,13 +58,13 @@ String? validateEmail(String? value) {
                   controller: _passwordController,
                   validator: (value){
                       if(value==null || value.isEmpty){
-                        return 'Por favor, ingresa el correo electronico';
+                        return 'Por favor, ingresa la contraseña';
                       }else{
                         return null;
                       }
                     },
                   decoration: InputDecoration(
-                     hintText: "Contraseña",
+                    hintText: "Contraseña",
                     label: Text("Contraseña"),
                     suffixIcon: IconButton(
                       onPressed: (){
@@ -75,6 +77,34 @@ String? validateEmail(String? value) {
                   obscureText: _textPassword,
                   
                 ),
+                
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextFormField(
+                  controller: _passwordRepeatController,
+                  validator: (value) {
+                          if (value != _passwordController.text ) {
+                            return 'Las contraseñas deben ser iguales, revisa de nuevo';
+                          } else {
+                            return null;
+                          }
+                        },
+                  decoration: InputDecoration(
+                    hintText: "Repetir contraseña",
+                    label: Text("Repetir contraseña"),
+                    suffixIcon: IconButton(
+                      onPressed: (){
+                        setState(() {
+                          _textPassword = !_textPassword;
+                        });
+                      }, 
+                      icon: Icon(_textPassword ? Icons.visibility_off : Icons.visibility))
+                  ),
+                  obscureText: _textPassword,
+                  
+                ),
+                
               ),
               const SizedBox(height: 8,),
               SizedBox(
@@ -84,13 +114,13 @@ String? validateEmail(String? value) {
                 child: ElevatedButton(
                   onPressed: () async {  
                     if(_keyForm.currentState!.validate()){
+
                        try {
-                            final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                            final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
                               email: _emailController.text,
                               password: _passwordController.text
                             );
-                          Navigator.pushReplacementNamed(context, "/profile");
-
+                            print(credential);
                           } on FirebaseAuthException catch (e) {
                             if (e.code == 'user-not-found') {
                               print('No user found for that email.');
@@ -103,7 +133,7 @@ String? validateEmail(String? value) {
                     }
                   }, 
                   child: 
-                  const Text('Inciar Sesión'),
+                  const Text('Registrar'),
                   style: OutlinedButton.styleFrom(
                     backgroundColor: Colors.amber[400],
                     foregroundColor: Colors.black87,
@@ -115,28 +145,7 @@ String? validateEmail(String? value) {
                   ),
                 
               ),
-              const SizedBox(height: 12,),
-               InkWell(
-                onTap:  ()=>{
-                  Navigator.pushReplacementNamed(context, "/sendEmail")
-                },
-                child: const Text('Recuperar Constraseña',
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline),),
-              ),
-              const SizedBox(height: 12,),
-               InkWell(
-                onTap:  ()=>{
-                  Navigator.pushReplacementNamed(context, "/register")
-                },
-                child: const Text('Registrarse',
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline),),
-              )
+              
             ],
           ),
         ),

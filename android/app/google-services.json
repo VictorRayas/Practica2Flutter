@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "532614685544",
+    "project_id": "finanzaspractica-6adcd",
+    "storage_bucket": "finanzaspractica-6adcd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532614685544:android:2fce176a5f400c9474ecdd",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDza9kqCjIDJxbAwxtP2aH8MSnq1ESr9-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

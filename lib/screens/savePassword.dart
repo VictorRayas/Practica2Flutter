@@ -79,22 +79,25 @@ class _SavepasswordState extends State<Savepassword> {
                     SizedBox(
                       height: 16,
                     ),
-                    SizedBox(
-                      height: 48,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (_keyform.currentState!.validate()) {
-                          
-                            Navigator.pushReplacementNamed(context, "/");
-                          }
-                        },
-                        child: const Text('Inciar Sesión'),
-                        style: OutlinedButton.styleFrom(
-                            backgroundColor: Colors.amber[400],
-                            foregroundColor: Colors.black87,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16))),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        height: 48,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_keyform.currentState!.validate()) {
+                            
+                              Navigator.pushReplacementNamed(context, "/");
+                            }
+                          },
+                          child: const Text('Cambiar Contraseña'),
+                          style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.blue[600],
+                              foregroundColor: Colors.black87,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16))),
+                        ),
                       ),
                     ),
                   ],
